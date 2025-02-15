@@ -2,52 +2,31 @@
   box-sizing: border-box;
 }
 
-.wrapper {
-  max-width: 940px;
+.container {
+  max-width: 92%;
   margin: 0 auto;
-}
-
-.wrapper>div {
-  border: 2px solid rgb(233 171 88);
-  border-radius: 5px;
-  background-color: rgb(233 171 88 / 50%);
-  padding: 1em;
-  color: #d9480f;
-}
-
-.wrapper {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  grid-auto-rows: minmax(100px, auto);
+  gap: 1rem;
+  grid-auto-rows: 1fr;
 }
 
-.one {
-  grid-column: 1 / 3;
-  grid-row: 1;
+.card {
+  border: 2px solid rgb(96 139 168);
+  border-radius: 5px;
+  background-color: rgb(96 139 168 / 0.2);
+  padding: 1em;
 }
 
-.two {
-  grid-column: 2 / 4;
-  grid-row: 1 / 3;
+
+
+@media (width <600px) {
+  .container {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
-.three {
-  grid-column: 1;
-  grid-row: 2 / 5;
-}
-
-.four {
-  grid-column: 3;
-  grid-row: 3;
-}
-
-.five {
-  grid-column: 2;
-  grid-row: 4;
-}
-
-.six {
-  grid-column: 3;
-  grid-row: 4;
+@media (width >=600px) {
+  .container {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }

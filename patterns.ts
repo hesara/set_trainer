@@ -122,7 +122,7 @@ function new_set_of_6(all_cards: Card[]): Card[] {
 
 let current_set = new_set_of_6(allCards);
 
-const btns = Array.from(document.getElementsByClassName("gridbutton"));
+const btns = Array.from(document.getElementsByClassName("card"));
 
 const zipped: [Card, Element][] = current_set.map((a, i) => [a, btns[i]]);
 zipped.forEach(([card, element]) => {
