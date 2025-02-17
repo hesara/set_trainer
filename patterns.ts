@@ -58,6 +58,66 @@ class GameState {
   }
 }
 
+function generateShapeSvg(shape: Shape, color: Color, filling: Filling): SVGElement {
+  let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  let svgShape = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  svg.setAttribute("width", "55");
+  svg.setAttribute("height", "93");
+  svg.setAttribute("viewBox", "0 0 55 93");
+
+  svgShape.style.strokeWidth = "3.7";
+
+  const colorHex = (() => {
+    switch (color) {
+      case Color.Red:
+        return "#FF0000";
+        break;
+      case Color.Blue:
+        return "#0000FF";
+        break;
+      case Color.Green:
+        return "#00FF00";
+        break;
+    }
+  })();
+  svgShape.style.stroke = colorHex;
+  svgShape.style.fill = "none";
+  if (filling === Filling.Full) {
+    svgShape.style.fill = colorHex;
+  }
+
+  switch (shape) {
+    case Shape.Oval:
+      svgShape.setAttribute("d",
+        "m 1.889764,22.342232 v 45.943675 c 0,27.223752 50.883116,27.221131 50.883116,0 V 22.245304 c 0,-27.2332978 -50.883116,-27.0801609 -50.883116,0.09693 z"
+      );
+      svg.appendChild(svgShape);
+      if (filling === Filling.Half) {
+        ["M 6.3721178,9.6036111 H 47.793378 Z",
+          "M 2.7697555,17.714151 H 53.244164 Z",
+          "M 2.0414089,25.714151 H 52.515818 Z",
+          "M 2.6044011,33.714151 H 53.07881 Z",
+          "M 2.6358972,41.714151 H 53.110306 Z",
+          "M 3.295346,49.714151 H 53.769755 Z",
+          "M 2.8780241,57.714151 H 53.352432 Z",
+          "M 2.1181806,65.714151 H 52.59259 Z",
+          "M 2.8937722,73.714151 H 52.004007 Z",
+          "M 7.1890467,81.409796 H 47.246132 Z"].forEach((d) => {
+            let line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            line.style.strokeWidth = "3.7";
+            line.style.stroke = colorHex;
+            line.setAttribute("d", d);
+            svg.appendChild(line);
+          })
+      }
+      break;
+  }
+
+  svg.appendChild(svgShape);
+
+  return svg;
+}
+
 
 function card_to_string(card: Card): string {
   return `${Color[card.color]} ${Shape[card.shape]} ${Filling[card.filling]} ${Count[card.count]}`;
@@ -166,7 +226,9 @@ function main() {
   const zipped: [Card, Element][] = current_set.map((a, i) => [a, card_elements[i]]);
   zipped.forEach(([card, element]) => {
     let elem = element as HTMLElement;
-    //elem.textContent = card_to_string(card);
+    elem.appendChild(generateShapeSvg(Shape.Oval, Color.Red, Filling.Full));
+    elem.appendChild(generateShapeSvg(Shape.Oval, Color.Red, Filling.Half));
+    elem.appendChild(generateShapeSvg(Shape.Oval, Color.Red, Filling.Empty));
     elem.setAttribute("data-card", JSON.stringify(card))
 
     elem.onclick = (ev) => {
@@ -198,3 +260,4 @@ function main() {
 }
 
 main();
+

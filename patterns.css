@@ -19,6 +19,11 @@
   justify-content: center;
 }
 
+.card svg {
+  padding: 2px;
+  margin: 3px;
+}
+
 .card-selected {
   border: 2px solid rgb(255 0 0);
   background-color: rgb(255 20 20 / 0.2);
