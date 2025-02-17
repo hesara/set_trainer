@@ -166,7 +166,7 @@ function main() {
   const zipped: [Card, Element][] = current_set.map((a, i) => [a, card_elements[i]]);
   zipped.forEach(([card, element]) => {
     let elem = element as HTMLElement;
-    elem.textContent = card_to_string(card);
+    //elem.textContent = card_to_string(card);
     elem.setAttribute("data-card", JSON.stringify(card))
 
     elem.onclick = (ev) => {
