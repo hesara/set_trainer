@@ -92,15 +92,64 @@ function generateShapeSvg(shape: Shape, color: Color, filling: Filling): SVGElem
       svgShape.setAttribute("d",
         "M 5,25 v 50 c 0,27 50,27 50,0 v -50 c 0,-27 -50,-27 -50,0 z"
       );
-      svg.appendChild(svgShape);
       if (filling === Filling.Half) {
         [
-          "M 6.3,15 H 52 Z",
-          "M 5,29 H 55 Z",
-          "M 5,43 H 55 Z",
-          "M 5,57 H 55 Z",
-          "M 5,71 H 55 Z",
-          "M 6.3,85 H 52 Z",
+          "M 6.3,15 H 52",
+          "M 5,29 H 55",
+          "M 5,43 H 55",
+          "M 5,57 H 55",
+          "M 5,71 H 55",
+          "M 6.3,85 H 52",
+        ].forEach((d) => {
+          let line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          line.style.strokeWidth = strokeWidth;
+          line.style.stroke = colorHex;
+          line.setAttribute("d", d);
+          //line.setAttribute("shape-rendering", "crispEdges");
+          svg.appendChild(line);
+        })
+      }
+      break;
+    case Shape.Wave:
+      svgShape.setAttribute("d",
+        "M 10,95 \
+       c 10,-10 10,-35 0,-45 \
+       s -10,-25 0,-45 \
+       h 40 \
+       c -10,10 -10,35 0,45 \
+       s 10,25 0,45 \
+       z"
+      );
+      if (filling === Filling.Half) {
+        [
+          "M 6.3,15 H 42",
+          "M 5,29 H 41",
+          "M 5,43 H 44",
+          "M 14,57 H 54",
+          "M 15,71 H 55",
+          "M 14,85 H 53",
+        ].forEach((d) => {
+          let line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          line.style.strokeWidth = strokeWidth;
+          line.style.stroke = colorHex;
+          line.setAttribute("d", d);
+          //line.setAttribute("shape-rendering", "crispEdges");
+          svg.appendChild(line);
+        })
+      }
+      break;
+    case Shape.Rectangle:
+      svgShape.setAttribute("d",
+        "M 30,5 l 25,45 l -25,45 l -25,-45 z"
+      );
+      if (filling === Filling.Half) {
+        [
+          "M 25,15 h 10",
+          "M 15,29 h 30",
+          "M 9,43 h 40",
+          "M 10,57 h 42",
+          "M 15,71 h 30",
+          "M 25,85 h 10",
         ].forEach((d) => {
           let line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
           line.style.strokeWidth = strokeWidth;
@@ -227,7 +276,7 @@ function main() {
   zipped.forEach(([card, element]) => {
     let elem = element as HTMLElement;
     for (let i = 0; i < card.count; i++) {
-    elem.appendChild(generateShapeSvg(card.shape, card.color, card.filling));
+      elem.appendChild(generateShapeSvg(card.shape, card.color, card.filling));
     }
     elem.setAttribute("data-card", JSON.stringify(card))
 
