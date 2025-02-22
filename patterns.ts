@@ -58,25 +58,18 @@ class GameState {
   }
 }
 
-function generateShapeSvg(shape: Shape, color: Color, filling: Filling): SVGElement {
-  let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+function generateShapePathSvg(shape: Shape, color: Color, filling: Filling): SVGPathElement {
   let svgShape = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  svg.setAttribute("width", "60");
-  svg.setAttribute("height", "100");
-  svg.setAttribute("viewBox", "0 0 60 100");
   const strokeWidth = "5";
 
   const colorHex = (() => {
     switch (color) {
       case Color.Red:
         return "#d55e00";
-        break;
       case Color.Green:
         return "#000000";
-        break;
       case Color.Blue:
         return "#56b4e9";
-        break;
     }
   })();
 
@@ -105,8 +98,6 @@ function generateShapeSvg(shape: Shape, color: Color, filling: Filling): SVGElem
           line.style.strokeWidth = strokeWidth;
           line.style.stroke = colorHex;
           line.setAttribute("d", d);
-          //line.setAttribute("shape-rendering", "crispEdges");
-          svg.appendChild(line);
         })
       }
       break;
@@ -133,8 +124,6 @@ function generateShapeSvg(shape: Shape, color: Color, filling: Filling): SVGElem
           line.style.strokeWidth = strokeWidth;
           line.style.stroke = colorHex;
           line.setAttribute("d", d);
-          //line.setAttribute("shape-rendering", "crispEdges");
-          svg.appendChild(line);
         })
       }
       break;
@@ -155,14 +144,46 @@ function generateShapeSvg(shape: Shape, color: Color, filling: Filling): SVGElem
           line.style.strokeWidth = strokeWidth;
           line.style.stroke = colorHex;
           line.setAttribute("d", d);
-          //line.setAttribute("shape-rendering", "crispEdges");
-          svg.appendChild(line);
         })
       }
       break;
   }
 
-  svg.appendChild(svgShape);
+  return svgShape;
+
+}
+
+function generateCardSvg(shape: Shape, color: Color, filling: Filling, count: Count): SVGElement {
+  const shapePath = generateShapePathSvg(shape, color, filling);
+  let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute("width", "180");
+  svg.setAttribute("height", "100");
+  svg.setAttribute("viewBox", "0 0 180 100");
+
+  switch (count) {
+    case Count.One:
+      shapePath.setAttribute("transform", "translate(60)");
+      svg.appendChild(shapePath);
+      break;
+    case Count.Two:
+      shapePath.setAttribute("transform", "translate(30)");
+      svg.appendChild(shapePath);
+      // There must be a better way to clone SVG paths but cant be bothered atm
+      const otherPath = generateShapePathSvg(shape, color, filling);
+      otherPath.setAttribute("transform", "translate(90)");
+      svg.appendChild(otherPath);
+      break;
+    case Count.Three:
+      svg.appendChild(shapePath);
+      // There must be a better way to clone SVG paths but cant be bothered atm
+      const secondPath = generateShapePathSvg(shape, color, filling);
+      secondPath.setAttribute("transform", "translate(60)");
+      svg.appendChild(secondPath);
+      const thirdPath = generateShapePathSvg(shape, color, filling);
+      thirdPath.setAttribute("transform", "translate(120)");
+      svg.appendChild(thirdPath);
+      break;
+  }
 
   return svg;
 }
@@ -275,9 +296,7 @@ function main() {
   const zipped: [Card, Element][] = current_set.map((a, i) => [a, card_elements[i]]);
   zipped.forEach(([card, element]) => {
     let elem = element as HTMLElement;
-    for (let i = 0; i < card.count; i++) {
-      elem.appendChild(generateShapeSvg(card.shape, card.color, card.filling));
-    }
+    elem.appendChild(generateCardSvg(card.shape, card.color, card.filling, card.count));
     elem.setAttribute("data-card", JSON.stringify(card))
 
     elem.onclick = (ev) => {
