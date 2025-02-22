@@ -37,6 +37,13 @@
   }
 
   .card svg {
-    padding: 4px;
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+}
+
+@media (width >900px) {
+  .container {
+    max-width: 900px;
   }
 }
