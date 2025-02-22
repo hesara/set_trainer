@@ -58,7 +58,8 @@ class GameState {
   }
 }
 
-function generateShapePathSvg(shape: Shape, color: Color, filling: Filling): SVGPathElement {
+function generateShapePathSvg(shape: Shape, color: Color, filling: Filling): SVGGElement {
+  let svgG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
   let svgShape = document.createElementNS('http://www.w3.org/2000/svg', 'path');
   const strokeWidth = "5";
 
@@ -85,6 +86,7 @@ function generateShapePathSvg(shape: Shape, color: Color, filling: Filling): SVG
       svgShape.setAttribute("d",
         "M 5,25 v 50 c 0,27 50,27 50,0 v -50 c 0,-27 -50,-27 -50,0 z"
       );
+      svgG.appendChild(svgShape);
       if (filling === Filling.Half) {
         [
           "M 6.3,15 H 52",
@@ -98,6 +100,7 @@ function generateShapePathSvg(shape: Shape, color: Color, filling: Filling): SVG
           line.style.strokeWidth = strokeWidth;
           line.style.stroke = colorHex;
           line.setAttribute("d", d);
+          svgG.appendChild(line);
         })
       }
       break;
@@ -111,6 +114,7 @@ function generateShapePathSvg(shape: Shape, color: Color, filling: Filling): SVG
        s 10,25 0,45 \
        z"
       );
+      svgG.appendChild(svgShape);
       if (filling === Filling.Half) {
         [
           "M 6.3,15 H 42",
@@ -124,6 +128,7 @@ function generateShapePathSvg(shape: Shape, color: Color, filling: Filling): SVG
           line.style.strokeWidth = strokeWidth;
           line.style.stroke = colorHex;
           line.setAttribute("d", d);
+          svgG.appendChild(line);
         })
       }
       break;
@@ -131,6 +136,7 @@ function generateShapePathSvg(shape: Shape, color: Color, filling: Filling): SVG
       svgShape.setAttribute("d",
         "M 30,5 l 25,45 l -25,45 l -25,-45 z"
       );
+      svgG.appendChild(svgShape);
       if (filling === Filling.Half) {
         [
           "M 25,15 h 10",
@@ -144,13 +150,13 @@ function generateShapePathSvg(shape: Shape, color: Color, filling: Filling): SVG
           line.style.strokeWidth = strokeWidth;
           line.style.stroke = colorHex;
           line.setAttribute("d", d);
+          svgG.appendChild(line);
         })
       }
       break;
   }
 
-  return svgShape;
-
+  return svgG;
 }
 
 function generateCardSvg(shape: Shape, color: Color, filling: Filling, count: Count): SVGElement {
