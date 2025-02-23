@@ -174,18 +174,16 @@ function generateCardSvg(shape: Shape, color: Color, filling: Filling, count: Co
     case Count.Two:
       shapePath.setAttribute("transform", "translate(30)");
       svg.appendChild(shapePath);
-      // There must be a better way to clone SVG paths but cant be bothered atm
-      const otherPath = generateShapePathSvg(shape, color, filling);
+      const otherPath = shapePath.cloneNode(true) as (typeof shapePath);
       otherPath.setAttribute("transform", "translate(90)");
       svg.appendChild(otherPath);
       break;
     case Count.Three:
       svg.appendChild(shapePath);
-      // There must be a better way to clone SVG paths but cant be bothered atm
-      const secondPath = generateShapePathSvg(shape, color, filling);
+      const secondPath = shapePath.cloneNode(true) as (typeof shapePath);
       secondPath.setAttribute("transform", "translate(60)");
       svg.appendChild(secondPath);
-      const thirdPath = generateShapePathSvg(shape, color, filling);
+      const thirdPath = shapePath.cloneNode(true) as (typeof shapePath);
       thirdPath.setAttribute("transform", "translate(120)");
       svg.appendChild(thirdPath);
       break;
