@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-.container {
+#cardsContainer {
   max-width: 96%;
   margin: 0 auto;
   display: grid;
@@ -31,8 +31,31 @@
   background-color: rgb(255 20 20 / 0.2);
 }
 
+#foundTable {
+  margin-top: 20px;
+  table-layout: fixed;
+  width: 33%;
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+
+#foundTable svg {
+  max-width: 96%;
+  max-height: 96%;
+}
+
+#foundTable td {
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid black;
+}
+
+#foundTable tr {
+  border: 1px solid black;
+}
+
 @media (width <600px) {
-  .container {
+  #cardsContainer {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 

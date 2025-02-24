@@ -55,6 +55,26 @@ class GameState {
       throw "Trying to add an already found set";
     }
     this.foundSets.push(sorted);
+
+    this.updateFoundTable();
+  }
+
+  updateFoundTable(): void {
+    const table = document.getElementById("foundTable")!;
+    const last_i = this.foundSets.length - 1;
+    let row = table?.getElementsByTagName("tr")[last_i];
+    let cardSVGs: SVGElement[] = [];
+    for (let j = 0; j < 3; j++) {
+      let cur_card = this.foundSets[last_i][j];
+      cardSVGs.push(generateCardSvg(cur_card.shape, cur_card.color, cur_card.filling, cur_card.count));
+    }
+
+    row.getElementsByTagName("td")[0].replaceChildren(cardSVGs[0]);
+    row.getElementsByTagName("td")[1].replaceChildren(cardSVGs[1]);
+    row.getElementsByTagName("td")[2].replaceChildren(cardSVGs[2]);
+
+    const countSpan = document.getElementById("foundNo")!;
+    countSpan.innerHTML = this.foundSets.length.toString();
   }
 }
 
