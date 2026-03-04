@@ -31,27 +31,37 @@
   background-color: rgb(255 20 20 / 0.2);
 }
 
-#foundTable {
-  margin-top: 20px;
-  table-layout: fixed;
-  width: 33%;
-  border-collapse: collapse;
-  border: 1px solid black;
+#foundContainer p {
+  margin-bottom: 4px;
 }
 
-#foundTable svg {
-  max-width: 96%;
-  max-height: 96%;
+#foundStrip {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
 }
 
-#foundTable td {
-  text-align: center;
-  vertical-align: middle;
+.found-set-slot {
+  display: flex;
+  flex-direction: column;
   border: 1px solid black;
+  min-width: 80px;
+  flex-shrink: 0;
 }
 
-#foundTable tr {
-  border: 1px solid black;
+.found-card {
+  border: 1px solid #ccc;
+  min-height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.found-card svg {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 @media (width <600px) {
