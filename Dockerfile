@@ -1,7 +1,7 @@
 FROM node:alpine AS build
 WORKDIR /app
 COPY patterns.ts .
-RUN npx tsc patterns.ts
+RUN npm install typescript && npx tsc patterns.ts
 
 FROM nginx:alpine
 COPY patterns.html /usr/share/nginx/html/index.html
